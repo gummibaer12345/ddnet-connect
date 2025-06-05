@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>DDNet Verbindung</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 2rem;
+    }
+    .box {
+      background: #f0f0f0;
+      border-radius: 12px;
+      display: inline-block;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    a {
+      color: #0078ff;
+      text-decoration: underline;
+    }
+  </style>
+  <script>
+    function getQueryParam(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+    }
+
+    function redirectToDDNet() {
+      const ip = getQueryParam('ip');
+      const port = getQueryParam('port');
+      if (!ip || !port) {
+        document.getElementById('status').innerHTML = "Fehlende IP oder Port in der URL.";
+        return;
+      }
+
+      const targetUrl = `ddnet://${ip}:${port}`;
+      document.getElementById('status').innerHTML = `Du wirst verbunden mit <strong>${ip}:${port}</strong>...`;
+
+      // Automatische Weiterleitung
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 1500);
+
+      // Backup-Link anzeigen
+      document.getElementById('fallback').innerHTML = `
+        Falls nichts passiert, <a href="${targetUrl}">klicke hier</a>.
+      `;
+    }
+
+    window.onload = redirectToDDNet;
+  </script>
+</head>
+<body>
+  <div class="box">
+    <h2>Verbindung zu DDNet-Server</h2>
+    <p id="status">Wird geladen...</p>
+    <p id="fallback" style="margin-top: 1em;"></p>
+  </div>
+</body>
+</html>
