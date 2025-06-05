@@ -32,19 +32,19 @@
       const ip = getQueryParam('ip');
       const port = getQueryParam('port');
       if (!ip || !port) {
-        document.getElementById('status').innerHTML = "Fehlende IP oder Port in der URL.";
+        document.getElementById('status').innerHTML = "Missing IP or Port in the URL.";
         return;
       }
 
       const targetUrl = `ddnet://${ip}:${port}`;
       document.getElementById('status').innerHTML = `You are being connected to <strong>${ip}:${port}</strong>...`;
 
-      // Automatische Weiterleitung
+      // Automatic redirection
       setTimeout(() => {
         window.location.href = targetUrl;
       }, 1500);
 
-      // Backup-Link anzeigen
+      // Show Backup-Link 
       document.getElementById('fallback').innerHTML = `
         If nothing happens, <a href="${targetUrl}">click here</a>.
       `;
